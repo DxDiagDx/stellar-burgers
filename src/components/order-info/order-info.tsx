@@ -1,21 +1,43 @@
-import { FC, useMemo } from 'react';
-import { Preloader } from '../ui/preloader';
-import { OrderInfoUI } from '../ui/order-info';
+import { FC, useEffect, useMemo } from 'react';
+import { Preloader } from '@ui';
+import { OrderInfoUI } from '@ui';
 import { TIngredient } from '@utils-types';
+import { useDispatch, useSelector } from '../../services/store';
+import { getIngredientsItems } from '../../services/slices/burger-ingredients/slice';
+import { useParams } from 'react-router-dom';
+import { orderBurgerByNumber } from '../../services/slices/order/action';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
+  /** TODO: взять переменные orderData и burger-ingredients из стора */
+  const { number } = useParams();
 
-  const ingredients: TIngredient[] = [];
+  const dispatch = useDispatch();
+
+  const orderData = useSelector((state) => {
+    let order = state.feeds.orders.find(
+      (order) => order.number === Number(number)
+    );
+    if (order) {
+      return order;
+    }
+
+    order = state.profileFeed.orders.find(
+      (order) => order.number === Number(number)
+    );
+    if (order) {
+      return order;
+    }
+
+    return state.order.orderByNumber;
+  });
+
+  useEffect(() => {
+    if (!orderData) {
+      dispatch(orderBurgerByNumber(Number(number)));
+    }
+  }, []);
+
+  const ingredients = useSelector(getIngredientsItems);
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
