@@ -15,7 +15,7 @@ import styles from './app.module.css';
 import { AppHeader, Modal, OrderInfo, IngredientDetails } from '@components';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route/protected-route';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from '../../services/store';
 import { getIngredients } from '../../services/slices/burger-ingredients/action';
 import { getUser } from '../../services/slices/user/action';
@@ -60,7 +60,12 @@ const App = () => {
           element={<OnlyAuth component={<ProfileOrders />} />}
         />
         <Route path='/feed/:number' element={<OrderInfo />} />
-        <Route path='/ingredients/:id' element={<IngredientDetails />} />
+        <Route
+          path='/ingredients/:id'
+          element={
+            <IngredientDetails title={'Детали ингредиента'} isModal={false} />
+          }
+        />
         <Route path='/profile/orders/:number' element={<IngredientDetails />} />
         <Route path='*' element={<NotFound404 />} />
       </Routes>
@@ -83,7 +88,7 @@ const App = () => {
               <Modal
                 title={'Детали ингредиента'}
                 onClose={onClose}
-                children={<IngredientDetails />}
+                children={<IngredientDetails isModal />}
               />
             }
           />

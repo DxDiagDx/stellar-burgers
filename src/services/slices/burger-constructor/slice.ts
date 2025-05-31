@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TIngredient } from '@utils-types';
+import { orderBurger } from '../order/action';
 
 type TBurgerConstructorSlice = {
   bun: TIngredient | null;
   ingredients: TConstructorIngredient[];
 };
 
-const initialState: TBurgerConstructorSlice = {
+export const initialState: TBurgerConstructorSlice = {
   bun: null,
   ingredients: []
 };
@@ -45,11 +46,13 @@ export const burgerConstructorSlice = createSlice({
       );
       const [ingredient] = state.ingredients.splice(ingredientIndex, 1);
       state.ingredients.splice(ingredientIndex - 1, 0, ingredient);
-    },
-    resetConstructor: (state) => {
+    }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(orderBurger.fulfilled, (state) => {
       state.bun = null;
       state.ingredients = [];
-    }
+    });
   }
 });
 
@@ -57,8 +60,7 @@ export const {
   addIngredientInConstructor,
   removeIngredientFromConstructor,
   moveDownIngredient,
-  moveUpIngredient,
-  resetConstructor
+  moveUpIngredient
 } = burgerConstructorSlice.actions;
 
 export const { getConstructorBun, getConstructorIngredients } =

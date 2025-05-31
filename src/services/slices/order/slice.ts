@@ -10,7 +10,7 @@ type TOrderState = {
   error: string | null;
 };
 
-export const initialState: TOrderState = {
+export const orderInitialState: TOrderState = {
   orderByNumber: null,
   orderModalData: null,
   orderRequest: false,
@@ -20,7 +20,7 @@ export const initialState: TOrderState = {
 
 export const orderSlice = createSlice({
   name: 'order',
-  initialState,
+  initialState: orderInitialState,
   reducers: {
     setOrderRequest: (state, action) => {
       state.orderRequest = action.payload;

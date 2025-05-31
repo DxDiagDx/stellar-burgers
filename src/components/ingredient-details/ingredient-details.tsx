@@ -6,7 +6,15 @@ import { getIngredientsItems } from '../../services/slices/burger-ingredients/sl
 import { useLocation } from 'react-router-dom';
 import { TIngredient } from '@utils-types';
 
-export const IngredientDetails: FC = () => {
+type TIngredientDetailsProps = {
+  title?: string;
+  isModal?: boolean;
+};
+
+export const IngredientDetails: FC<TIngredientDetailsProps> = ({
+  title,
+  isModal
+}) => {
   const location = useLocation();
   const ingredientId = location.pathname.split('/').pop();
   /** TODO: взять переменную из стора */
@@ -18,5 +26,11 @@ export const IngredientDetails: FC = () => {
     return <Preloader />;
   }
 
-  return <IngredientDetailsUI ingredientData={ingredientData} />;
+  return (
+    <IngredientDetailsUI
+      title={title}
+      ingredientData={ingredientData}
+      isModal={isModal}
+    />
+  );
 };

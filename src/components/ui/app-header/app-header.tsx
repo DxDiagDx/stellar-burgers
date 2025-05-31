@@ -39,8 +39,8 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
         to={'/profile'}
         className={({ isActive }) =>
           isActive
-            ? `${styles.link_active} ${styles.link_position_last}`
-            : styles.link_position_last
+            ? `${styles.link_active} ${styles.link} ${styles.link_position_last}`
+            : `${styles.link} ${styles.link_position_last}`
         }
       >
         <ProfileIcon type={'primary'} />
