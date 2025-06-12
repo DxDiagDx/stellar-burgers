@@ -10,7 +10,7 @@ type TOrderState = {
   error: string | null;
 };
 
-export const orderInitialState: TOrderState = {
+export const initialState: TOrderState = {
   orderByNumber: null,
   orderModalData: null,
   orderRequest: false,
@@ -20,7 +20,7 @@ export const orderInitialState: TOrderState = {
 
 export const orderSlice = createSlice({
   name: 'order',
-  initialState: orderInitialState,
+  initialState: initialState,
   reducers: {
     setOrderRequest: (state, action) => {
       state.orderRequest = action.payload;
@@ -40,29 +40,29 @@ export const orderSlice = createSlice({
         state.error = null;
         state.orderRequest = true;
       })
-      .addCase(orderBurger.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || '';
-        state.orderRequest = false;
-      })
       .addCase(orderBurger.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.orderRequest = false;
         state.orderModalData = action.payload.order;
       })
+      .addCase(orderBurger.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || '';
+        state.orderRequest = false;
+      })
       .addCase(orderBurgerByNumber.pending, (state) => {
         state.loading = true;
         state.error = null;
-      })
-      .addCase(orderBurgerByNumber.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || '';
       })
       .addCase(orderBurgerByNumber.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.orderByNumber = action.payload.orders[0];
+      })
+      .addCase(orderBurgerByNumber.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || '';
       });
   }
 });

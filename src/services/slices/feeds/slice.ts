@@ -4,7 +4,6 @@ import { getFeeds } from './action';
 
 type TFeedsState = {
   orders: TOrder[];
-  success: boolean;
   total: number;
   totalToday: number;
   loading: boolean;
@@ -13,7 +12,6 @@ type TFeedsState = {
 
 export const initialState: TFeedsState = {
   orders: [],
-  success: false,
   total: 0,
   totalToday: 0,
   loading: false,

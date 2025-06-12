@@ -7,7 +7,7 @@ import {
   TLoginData,
   TRegisterData,
   updateUserApi
-} from '@api';
+} from '../../../utils/burger-api';
 import { deleteCookie, setCookie } from '../../../utils/cookie';
 
 export const registerUser = createAsyncThunk(

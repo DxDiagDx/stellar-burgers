@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getUser, loginUser, logout, registerUser, updateUser } from './action';
 import { TRegisterData } from '@api';
 
-type TAuthState = {
+export type TAuthState = {
   user: TUser | null;
   registerData: TRegisterData;
   isAuthChecked: boolean;
